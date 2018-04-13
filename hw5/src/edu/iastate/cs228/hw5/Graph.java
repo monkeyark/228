@@ -101,7 +101,10 @@ public class Graph
 	 */
 	public void unvisitAll()
 	{
-		// TODO
+		for (Vertex v : vertices)
+		{
+			v.unvisit();
+		}
 	}
 	
 	/**
