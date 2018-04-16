@@ -142,7 +142,17 @@ public class Graph
 	 */
 	public boolean hasCycle()
 	{
-		// TODO
+		//TODO
+		for (Vertex v : vertices)
+		{
+			for (Vertex u : vertices)
+			{
+				if (v.hasCycle(u))
+				{
+					return true;
+				}
+			}
+		}
 		return false;
 	}
 	
@@ -216,10 +226,10 @@ public class Graph
 		public void setVisited(boolean visited)
 		{
 			// TODO
-			
 			/*
 			 * Don't forget to handle the special false case.
 			 */
+			this.visited = visited;
 		}
 		
 		@Override
