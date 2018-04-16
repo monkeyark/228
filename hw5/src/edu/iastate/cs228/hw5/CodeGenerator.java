@@ -19,7 +19,7 @@ public class CodeGenerator
 				"To reduce space usage, remove the key list if it is not needed. The",
 				"list is not needed for hash table operation. If you hash a value",
 				"which is not in the table (which you shouldn't), the only way to",
-				"detect the miss is to compare against the corresponding table index."			
+				"detect the miss is to compare against the corresponding table index."
 				
 		};
 	
@@ -121,8 +121,7 @@ public class CodeGenerator
 	 */
 	public CodeGenerator(int[][] table1, int[][] table2, int[] gArray, int modulus, List<String> words) throws NullPointerException, IllegalArgumentException
 	{
-		if (null == table1 || null == table2 || null == gArray
-				|| null == words)
+		if (null == table1 || null == table2 || null == gArray || null == words)
 		{
 			throw new NullPointerException();
 		}
@@ -164,8 +163,7 @@ public class CodeGenerator
 		
 		if (!className.matches("[A-Za-z_][A-Za-z_0-9]*"))
 		{
-			throw new IllegalArgumentException("invalid class name \""
-					+ className + "\"");
+			throw new IllegalArgumentException("invalid class name \"" + className + "\"");
 		}
 		
 		
@@ -179,8 +177,7 @@ public class CodeGenerator
 		begin(ps, "public", className);
 		
 		printComment(ps, COMMENT_KEY_LIST, INDENT[1]);
-		array(ps, words.toArray(new String[0]), "public static final",
-				keyListName);
+		array(ps, words.toArray(new String[0]), "public static final", keyListName);
 		
 		ps.println();
 		
@@ -197,8 +194,7 @@ public class CodeGenerator
 		ps.println();
 		
 		printDocComment(ps, COMMENT_HASH, INDENT[1]);
-		hashFunction(ps, "public static", table1Name, table2Name, graphArrName, modulus,
-				words.size());
+		hashFunction(ps, "public static", table1Name, table2Name, graphArrName, modulus, words.size());
 		
 		ps.println();
 		
@@ -389,8 +385,7 @@ public class CodeGenerator
 		
 		ps.print(INDENT[indentLevel + 3]);
 		ps.printf("System.err.printf(\"Error while hashing \\\"%%s\\\": "
-				+ "expected %%d but was %%d%%n\", %s[i], i, h);",
-				keyArrName);
+				+ "expected %%d but was %%d%%n\", %s[i], i, h);", keyArrName);
 		ps.println();
 		
 		ps.print(INDENT[indentLevel + 2]);
