@@ -307,14 +307,12 @@ public class Graph
 		/**
 		 * The data of this edge.
 		 */
-		private	final String
-		data;
+		private	final String data;
 		
 		/**
 		 * The vertex from which this edge is outgoing.
 		 */
-		private	final Vertex
-		from;
+		private	final Vertex from;
 		
 		/**
 		 * The vertex to which this edge is incoming.
