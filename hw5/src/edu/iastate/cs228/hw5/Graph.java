@@ -229,9 +229,22 @@ public class Graph
 		public void setVisited(boolean visited)
 		{
 			// TODO
+			
+			/**
+			 *
+			 * If {@code visited} is false, also unvisits the outgoing edges of this
+			 * vertex.
+			 */
 			/*
 			 * Don't forget to handle the special false case.
 			 */
+			if (!visited)
+			{
+				for (Edge e : edges)
+				{
+					e.setVisited(visited);
+				}
+			}
 			this.visited = visited;
 		}
 		
@@ -281,22 +294,11 @@ public class Graph
 			}
 		}
 		
-		/**
-		 * Determines if this vertex leads to a cycle with a depth-first traversal.
-		 *
-		 * If the vertex is already visited, a cycle has been detected.
-		 * Otherwise, marks the vertex as visited, then checks its neighbors
-		 * (except for {@code from}) by calling {@code hasCycle(this)} on them.
-		 *
-		 * @param from
-		 *   the vertex from which this vertex was visited
-		 * @return
-		 *   true if and only if there is a cycle
-		 */
 		@Override
 		public boolean hasCycle(Vertex from)
 		{
 			// TODO
+			//https://java2blog.com/depth-first-search-in-java/
 			Stack<Vertex> stack = new Stack<Vertex>();
 			stack.push(this);
 			this.visit();
