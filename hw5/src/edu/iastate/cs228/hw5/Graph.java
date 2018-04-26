@@ -3,6 +3,8 @@ package edu.iastate.cs228.hw5;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Stack;
 
 
 /**
@@ -93,7 +95,9 @@ public class Graph
 	 */
 	public void addEdge(int fromIdx, int toIdx, int index, String word) throws IndexOutOfBoundsException, NullPointerException
 	{
-		// TODO
+		GraphEdge edge = new GraphEdge(index, word, vertices[fromIdx], vertices[toIdx]);
+		vertices[fromIdx].edges().add(edge);
+		vertices[toIdx].edges().add(edge);
 	}
 	
 	/**
@@ -129,7 +133,6 @@ public class Graph
 				v.fillGArray(toRet, words);
 			}
 		}
-		
 		
 		return toRet;
 	}
@@ -278,10 +281,43 @@ public class Graph
 			}
 		}
 		
+		/**
+		 * Determines if this vertex leads to a cycle with a depth-first traversal.
+		 *
+		 * If the vertex is already visited, a cycle has been detected.
+		 * Otherwise, marks the vertex as visited, then checks its neighbors
+		 * (except for {@code from}) by calling {@code hasCycle(this)} on them.
+		 *
+		 * @param from
+		 *   the vertex from which this vertex was visited
+		 * @return
+		 *   true if and only if there is a cycle
+		 */
 		@Override
 		public boolean hasCycle(Vertex from)
 		{
 			// TODO
+			Stack<Vertex> stack = new Stack<Vertex>();
+			stack.push(this);
+			this.visit();
+			while(!stack.isEmpty())
+			{
+				GraphVertex current = (GraphVertex) stack.pop();
+				Iterator<Edge> iter = current.edges.iterator();
+				while (iter.hasNext())
+				{
+					Vertex child = (Vertex) iter.next();
+					if(child != null && !child.isVisited())
+					{
+						child.visit();
+						stack.push(child);
+					}
+					else if (child != null && child.isVisited())
+					{
+						return true;
+					}
+				}
+			}
 			return false;
 		}
 		
