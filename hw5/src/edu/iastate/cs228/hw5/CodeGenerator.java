@@ -219,7 +219,9 @@ public class CodeGenerator
 	 */
 	private void begin(PrintStream ps, String access, String className)
 	{
-		// TODO
+		ps.println(access + " class " + className);
+		ps.println("{");
+		
 	}
 	
 	/**
@@ -236,7 +238,20 @@ public class CodeGenerator
 	 */
 	private void array(PrintStream ps, String[] data, String access, String varName)
 	{
-		// TODO
+		String arr = "    ";
+		for (int i=0; i<data.length; i++)
+		{
+			arr += "\"" + data[i] + "\"";
+			if (i<data.length-1)
+			{
+				arr += ", ";
+			}
+			arr += System.lineSeparator();
+		}
+		
+		ps.println(access + " String[] " + varName + " = ");
+		ps.println("{" + System.lineSeparator() + arr + System.lineSeparator() + "};");
+		ps.println();
 	}
 	
 	/**
@@ -254,6 +269,32 @@ public class CodeGenerator
 	private void array(PrintStream ps, int[] data, String access, String varName)
 	{
 		// TODO
+		String arr = "    ";
+		for (int i=0; i<data.length; i++)
+		{
+			if ((i+1) % 5 != 0)
+			{
+				arr += data[i];
+				if (i<data.length-1)
+				{
+					arr += ", ";
+				}
+				
+			}
+			else
+			{
+				arr += System.lineSeparator() + "    " + data[i];
+				if (i<data.length-1)
+				{
+					arr += ", ";
+				}
+			}
+			arr += System.lineSeparator();
+		}
+		
+		ps.println(access + " int[] " + varName + " = ");
+		ps.println("{" + System.lineSeparator() + arr + System.lineSeparator() + "};");
+		ps.println();
 	}
 	
 	/**
@@ -270,7 +311,43 @@ public class CodeGenerator
 	 */
 	private void table(PrintStream ps, int[][] data, String access, String varName)
 	{
-		// TODO
+		String arr = "    ";
+		for (int i=0; i<data.length; i++)
+		{
+			arr += "{" + System.lineSeparator() + "    " + "    ";
+			for (int j=0; j<data[0].length; j++)
+			{
+				if ((j+1) % 5 != 0)
+				{
+					arr += data[j];
+					if (j<data[0].length-1)
+					{
+						arr += ", ";
+					}
+				}
+				else
+				{
+					arr += System.lineSeparator() + "    " + "    " + data[j];
+					if (j<data[0].length-1)
+					{
+						arr += ", ";
+					}
+				}
+			}
+			arr += "    " + "}";
+			if (i<data.length-1)
+			{
+				arr += ", " + System.lineSeparator();
+			}
+			else
+			{
+				arr += System.lineSeparator();
+			}
+		}
+		
+		ps.println(access + " int[] " + varName + " = ");
+		ps.println("{" + System.lineSeparator() + arr + System.lineSeparator() + "};");
+		ps.println();
 	}
 	
 	/**
@@ -409,7 +486,8 @@ public class CodeGenerator
 	 */
 	private void end(PrintStream ps)
 	{
-		// TODO
+		ps.print(System.lineSeparator());
+		ps.println("}");
 	}
 	
 	/**
