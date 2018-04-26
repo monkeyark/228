@@ -1,11 +1,15 @@
 package edu.iastate.cs228.hw5;
 
 
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Scanner;
 
 
 /**
@@ -79,6 +83,17 @@ public class PerfectHashGenerator
 	public void	generate(String wordFileName, String outputClassName, Random rng) throws IOException, IllegalArgumentException
 	{
 		// TODO
+		List<String> words = readWordFile(wordFileName);
+		int[][] table1 = new int[TABLE_ROWS][TABLE_COLUMNS];
+		int[][] table2 = new int[TABLE_ROWS][TABLE_COLUMNS];
+		int[] gArray = new int[words.size()];
+		int modulus = 2 * words.size() + 1;
+		File file = new File(outputClassName + ".java");
+		OutputStream output = new FileOutputStream(file);
+		
+		mapping(table1, table2, modulus, rng, words);
+		CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
+		gen.generate(output, outputClassName);
 	}
 	
 	/**
@@ -100,6 +115,14 @@ public class PerfectHashGenerator
 	public void generate(List<String> words, OutputStream output, String outputClassName, Random rng) throws IllegalArgumentException
 	{
 		// TODO
+		int[][] table1 = new int[TABLE_ROWS][TABLE_COLUMNS];
+		int[][] table2 = new int[TABLE_ROWS][TABLE_COLUMNS];
+		int[] gArray = new int[words.size()];
+		int modulus = 2 * words.size() + 1;
+		
+		mapping(table1, table2, modulus, rng, words);
+		CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
+		gen.generate(output, outputClassName);
 	}
 	
 	/**
@@ -177,6 +200,17 @@ public class PerfectHashGenerator
 	private List<String> readWordFile(String fileName) throws FileNotFoundException
 	{
 		// TODO
-		return null;
+		List<String> words = new ArrayList<String>();
+		
+		File file = new File(fileName);
+		Scanner scanner = new Scanner(file);
+		
+		while (scanner.hasNextLine() && scanner.hasNext())
+		{
+			words.add(scanner.nextLine());
+		}
+		scanner.close();
+		
+		return words;
 	}
 }
