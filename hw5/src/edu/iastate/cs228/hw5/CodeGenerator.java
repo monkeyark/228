@@ -272,7 +272,7 @@ public class CodeGenerator
 		String arr = "    ";
 		for (int i=0; i<data.length; i++)
 		{
-			if ((i+1) % 5 != 0)
+			if ((i+1) % 8 != 0)
 			{
 				arr += data[i];
 				if (i<data.length-1)
@@ -317,7 +317,7 @@ public class CodeGenerator
 			arr += "{" + System.lineSeparator() + "    " + "    ";
 			for (int j=0; j<data[0].length; j++)
 			{
-				if ((j+1) % 5 != 0)
+				if ((j+1) % 8 != 0)
 				{
 					arr += data[j];
 					if (j<data[0].length-1)
@@ -544,6 +544,3 @@ public class CodeGenerator
 		ps.println(" */");
 	}
 }
-	
-	
-	
