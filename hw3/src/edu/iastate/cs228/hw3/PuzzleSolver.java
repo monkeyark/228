@@ -1,6 +1,7 @@
 package edu.iastate.cs228.hw3;
 
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -23,6 +24,10 @@ public class PuzzleSolver
 		// Call EightPuzzle.solve8puzzle() to solve the puzzle. 
 		int[][] board = {{1,2,3},{6,5,7},{8,4,0}};
 		State init = new State(board);
+		
+		//Check init.board
+		System.out.println(Arrays.deepToString(init.board));
+		
 		EightPuzzle puzzle = new EightPuzzle();
 		System.out.println(puzzle.solve8Puzzle(init));
 		
