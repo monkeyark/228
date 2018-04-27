@@ -249,7 +249,7 @@ public class CodeGenerator
 			arr += System.lineSeparator();
 		}
 		
-		ps.println(access + " String[] " + varName + " = ");
+		ps.println(access + " String[] " + varName + " = " + System.lineSeparator());
 		ps.println("{" + System.lineSeparator() + arr + System.lineSeparator() + "};");
 		ps.println();
 	}
@@ -268,7 +268,6 @@ public class CodeGenerator
 	 */
 	private void array(PrintStream ps, int[] data, String access, String varName)
 	{
-		// TODO
 		String arr = "    ";
 		for (int i=0; i<data.length; i++)
 		{
@@ -283,7 +282,8 @@ public class CodeGenerator
 			}
 			else
 			{
-				arr += System.lineSeparator() + "    " + data[i];
+				//arr += System.lineSeparator() + "    " + data[i];
+				arr += "    " + data[i];
 				if (i<data.length-1)
 				{
 					arr += ", ";
@@ -319,7 +319,7 @@ public class CodeGenerator
 			{
 				if ((j+1) % 8 != 0)
 				{
-					arr += data[j];
+					arr += data[i][j];
 					if (j<data[0].length-1)
 					{
 						arr += ", ";
@@ -327,7 +327,7 @@ public class CodeGenerator
 				}
 				else
 				{
-					arr += System.lineSeparator() + "    " + "    " + data[j];
+					arr += System.lineSeparator() + "    " + "    " + data[i][j];
 					if (j<data[0].length-1)
 					{
 						arr += ", ";
@@ -345,7 +345,7 @@ public class CodeGenerator
 			}
 		}
 		
-		ps.println(access + " int[] " + varName + " = ");
+		ps.println(access + " int[][] " + varName + " = ");
 		ps.println("{" + System.lineSeparator() + arr + System.lineSeparator() + "};");
 		ps.println();
 	}
