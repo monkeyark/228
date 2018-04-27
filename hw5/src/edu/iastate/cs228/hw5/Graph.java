@@ -154,8 +154,6 @@ public class Graph
 	 */
 	public boolean hasCycle()
 	{
-		//TODO
-		
 		boolean found = false;
 		unvisitAll();
 		
@@ -316,7 +314,6 @@ public class Graph
 		@Override
 		public boolean hasCycle(Vertex from)
 		{
-			// TODO
 			visit();
 			Collection<Edge> edge = edges();
 			Iterator<Edge> iter = edge.iterator();
