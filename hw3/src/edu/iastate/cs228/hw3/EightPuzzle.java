@@ -168,13 +168,15 @@ public class EightPuzzle
 	{
 		State temp = goal;
 		ArrayList<State> list = new ArrayList<State>();
-		String solution = "";
-		while (temp.predecessor != null)
+		//while (temp.predecessor != null)
+		while (temp != null)
 		{
 			list.add(temp);
 			temp = temp.predecessor;
 		}
 		Collections.reverse(list);
+		
+		String solution = "";
 		 if (State.heu  == Heuristic.TileMismatch)
 		 {
 			 solution += list.size() + " move in total (heuristic: the Manhattan distance)" + System.lineSeparator();
@@ -183,14 +185,17 @@ public class EightPuzzle
 		 {
 			 solution += list.size() + " move in total (heuristic: number of mismatched tiles)" + System.lineSeparator();
 		 }
-		 solution += list.get(0).previous.toString() + System.lineSeparator();
+		 solution += list.get(0).toString() + System.lineSeparator();
 		 
 		 for (State s : list)
 		 {
-			 solution += s.move.toString() + System.lineSeparator()
-			 			+ s.toString() + System.lineSeparator();
+			 if (s.move != null)
+			 {
+				 solution += s.move.toString() + System.lineSeparator() + s.toString() + System.lineSeparator();
+			 }
 		 }
-		return solution; 
+		return solution;
+
 	}
 	
 }
