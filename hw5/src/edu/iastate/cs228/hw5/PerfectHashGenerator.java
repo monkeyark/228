@@ -42,10 +42,11 @@ public class PerfectHashGenerator
 		
 		String prefix = "";
 		Random rng;
+		int seed = 686;
 		
 		
 		// TODO remove this and process args properly
-		rng = null;
+		rng = new Random(seed);
 		
 		
 		PerfectHashGenerator gen = new PerfectHashGenerator();
@@ -82,18 +83,23 @@ public class PerfectHashGenerator
 	 */
 	public void	generate(String wordFileName, String outputClassName, Random rng) throws IOException, IllegalArgumentException
 	{
-		// TODO
+		// TODO Exception
+		
 		List<String> words = readWordFile(wordFileName);
 		int[][] table1 = new int[TABLE_ROWS][TABLE_COLUMNS];
 		int[][] table2 = new int[TABLE_ROWS][TABLE_COLUMNS];
-		int[] gArray = new int[words.size()];
 		int modulus = 2 * words.size() + 1;
 		File file = new File(outputClassName + ".java");
 		OutputStream output = new FileOutputStream(file);
 		
-		mapping(table1, table2, modulus, rng, words);
+		Graph graph = mapping(table1, table2, modulus, rng, words);
+		int[] gArray = graph.fillGArray(modulus);
+		
 		CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
 		gen.generate(output, outputClassName);
+		
+		Visualizer v = new Visualizer();
+		v.useGraph(graph);
 	}
 	
 	/**
@@ -109,18 +115,20 @@ public class PerfectHashGenerator
 	 * @param rng
 	 *   the random number generator for the generated hash table
 	 *
+	 *
 	 * @throws IllegalArgumentException
 	 *   if the given output class name is not a valid Java identifier
 	 */
 	public void generate(List<String> words, OutputStream output, String outputClassName, Random rng) throws IllegalArgumentException
 	{
-		// TODO
+		// TODO Ex
 		int[][] table1 = new int[TABLE_ROWS][TABLE_COLUMNS];
 		int[][] table2 = new int[TABLE_ROWS][TABLE_COLUMNS];
-		int[] gArray = new int[words.size()];
 		int modulus = 2 * words.size() + 1;
 		
-		mapping(table1, table2, modulus, rng, words);
+		Graph graph = mapping(table1, table2, modulus, rng, words);
+		int[] gArray = graph.fillGArray(modulus);
+		
 		CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
 		gen.generate(output, outputClassName);
 	}
@@ -199,7 +207,6 @@ public class PerfectHashGenerator
 	 */
 	private List<String> readWordFile(String fileName) throws FileNotFoundException
 	{
-		// TODO
 		List<String> words = new ArrayList<String>();
 		
 		File file = new File(fileName);
