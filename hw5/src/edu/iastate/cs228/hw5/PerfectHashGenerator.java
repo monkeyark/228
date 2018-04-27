@@ -40,7 +40,7 @@ public class PerfectHashGenerator
 		}
 		
 		
-		String prefix = "";
+		String prefix = "W_";
 		Random rng;
 		int seed = 686;
 		
@@ -93,7 +93,7 @@ public class PerfectHashGenerator
 		OutputStream output = new FileOutputStream(file);
 		
 		Graph graph = mapping(table1, table2, modulus, rng, words);
-		int[] gArray = graph.fillGArray(modulus);
+		int[] gArray = graph.fillGArray(words.size());
 		
 		CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
 		gen.generate(output, outputClassName);
@@ -127,7 +127,7 @@ public class PerfectHashGenerator
 		int modulus = 2 * words.size() + 1;
 		
 		Graph graph = mapping(table1, table2, modulus, rng, words);
-		int[] gArray = graph.fillGArray(modulus);
+		int[] gArray = graph.fillGArray(words.size());
 		
 		CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
 		gen.generate(output, outputClassName);
