@@ -4,7 +4,6 @@ package edu.iastate.cs228.hw5;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.Stack;
 
 
 /**
@@ -95,9 +94,13 @@ public class Graph
 	 */
 	public void addEdge(int fromIdx, int toIdx, int index, String word) throws IndexOutOfBoundsException, NullPointerException
 	{
-		GraphEdge edge = new GraphEdge(index, word, vertices[fromIdx], vertices[toIdx]);
-		vertices[fromIdx].edges().add(edge);
-		vertices[toIdx].edges().add(edge);
+		//TODO exception
+		GraphEdge fromEdge = new GraphEdge(index, word, vertices[fromIdx], vertices[toIdx]);
+		GraphEdge toEdge = new GraphEdge(index, word, vertices[toIdx], vertices[fromIdx]);
+		vertices[fromIdx].edges().add(fromEdge);
+		vertices[toIdx].edges().add(toEdge);
+		
+
 	}
 	
 	/**
@@ -107,6 +110,12 @@ public class Graph
 	{
 		for (Vertex v : vertices)
 		{
+			Collection<Edge> edge = v.edges();
+			Iterator<Edge> iter = edge.iterator();
+			while (iter.hasNext())
+			{
+				iter.next().setVisited(false);
+			}
 			v.unvisit();
 		}
 	}
@@ -146,17 +155,19 @@ public class Graph
 	public boolean hasCycle()
 	{
 		//TODO
+		
+		boolean found = false;
+		unvisitAll();
+		
 		for (Vertex v : vertices)
 		{
-			for (Vertex u : vertices)
+			if (!v.isVisited() && !found)
 			{
-				if (v.hasCycle(u))
-				{
-					return true;
-				}
+				found = v.hasCycle(null);
 			}
 		}
-		return false;
+		
+		return found;
 	}
 	
 	@Override
@@ -228,15 +239,11 @@ public class Graph
 		@Override
 		public void setVisited(boolean visited)
 		{
-			// TODO
-			
-			/**
+			/*
 			 *
+			 * Don't forget to handle the special false case.
 			 * If {@code visited} is false, also unvisits the outgoing edges of this
 			 * vertex.
-			 */
-			/*
-			 * Don't forget to handle the special false case.
 			 */
 			if (!visited)
 			{
@@ -294,32 +301,39 @@ public class Graph
 			}
 		}
 		
+		/**
+		 * Determines if this vertex leads to a cycle with a depth-first traversal.
+		 *
+		 * If the vertex is already visited, a cycle has been detected.
+		 * Otherwise, marks the vertex as visited, then checks its neighbors
+		 * (except for {@code from}) by calling {@code hasCycle(this)} on them.
+		 *
+		 * @param from
+		 *   the vertex from which this vertex was visited
+		 * @return
+		 *   true if and only if there is a cycle
+		 */
 		@Override
 		public boolean hasCycle(Vertex from)
 		{
 			// TODO
-			//https://java2blog.com/depth-first-search-in-java/
-			Stack<Vertex> stack = new Stack<Vertex>();
-			stack.push(this);
-			this.visit();
-			while(!stack.isEmpty())
+			visit();
+			Collection<Edge> edge = edges();
+			Iterator<Edge> iter = edge.iterator();
+			
+			while (iter.hasNext())
 			{
-				GraphVertex current = (GraphVertex) stack.pop();
-				Iterator<Edge> iter = current.edges.iterator();
-				while (iter.hasNext())
+				Vertex next = iter.next().getTo();
+				if (next.isVisited() && next != from)
 				{
-					Vertex child = (Vertex) iter.next();
-					if(child != null && !child.isVisited())
-					{
-						child.visit();
-						stack.push(child);
-					}
-					else if (child != null && child.isVisited())
-					{
-						return true;
-					}
+					return true;
+				}
+				else if (!next.isVisited() && next != from)
+				{
+					next.hasCycle(this);
 				}
 			}
+			
 			return false;
 		}
 		
