@@ -39,15 +39,29 @@ public class PerfectHashGenerator
 			return;
 		}
 		
+		String prefix;
+		try
+	    {
+	        prefix = args[1];
+	        System.out.println(prefix);
+	    }
+		catch (ArrayIndexOutOfBoundsException e)
+	    {
+			prefix = "";
+	    }
 		
-		String prefix = "W_";
 		Random rng;
-		int seed = 686;
-		
-		
-		// TODO remove this and process args properly
-		rng = new Random(seed);
-		
+		try
+	    {
+	        int seed = Integer.parseInt(args[2]);
+	        rng = new Random(seed);
+	        System.out.println(seed);
+
+	    }
+		catch (ArrayIndexOutOfBoundsException e)
+	    {
+	        rng = new Random();
+	    }
 		
 		PerfectHashGenerator gen = new PerfectHashGenerator();
 		try
@@ -98,8 +112,8 @@ public class PerfectHashGenerator
 		CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
 		gen.generate(output, outputClassName);
 		
-		Visualizer v = new Visualizer();
-		v.useGraph(graph);
+//		Visualizer v = new Visualizer();
+//		v.useGraph(graph);
 	}
 	
 	/**

@@ -94,13 +94,13 @@ public class Graph
 	 */
 	public void addEdge(int fromIdx, int toIdx, int index, String word) throws IndexOutOfBoundsException, NullPointerException
 	{
-		//TODO exception
+		if (word == null) throw new NullPointerException();
+		if ((fromIdx < 0 || fromIdx >= vertices.length) || (toIdx < 0 || toIdx >= vertices.length)) throw new IndexOutOfBoundsException();
+		
 		GraphEdge fromEdge = new GraphEdge(index, word, vertices[fromIdx], vertices[toIdx]);
 		GraphEdge toEdge = new GraphEdge(index, word, vertices[toIdx], vertices[fromIdx]);
 		vertices[fromIdx].edges().add(fromEdge);
 		vertices[toIdx].edges().add(toEdge);
-		
-
 	}
 	
 	/**
@@ -155,6 +155,7 @@ public class Graph
 	public boolean hasCycle()
 	{
 		boolean found = false;
+		
 		unvisitAll();
 		
 		for (Vertex v : vertices)
@@ -237,12 +238,6 @@ public class Graph
 		@Override
 		public void setVisited(boolean visited)
 		{
-			/*
-			 *
-			 * Don't forget to handle the special false case.
-			 * If {@code visited} is false, also unvisits the outgoing edges of this
-			 * vertex.
-			 */
 			if (!visited)
 			{
 				for (Edge e : edges)
@@ -327,7 +322,10 @@ public class Graph
 				}
 				else if (!next.isVisited() && next != from)
 				{
-					next.hasCycle(this);
+					if(next.hasCycle(this))
+					{
+						return true;						
+					}
 				}
 			}
 			
@@ -449,4 +447,3 @@ public class Graph
 		}
 	}
 }
-	

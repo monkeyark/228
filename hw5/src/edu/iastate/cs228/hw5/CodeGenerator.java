@@ -249,7 +249,7 @@ public class CodeGenerator
 			arr += System.lineSeparator();
 		}
 		
-		ps.println(access + " String[] " + varName + " = " + System.lineSeparator());
+		ps.println(access + " String[] " + varName + " = ");
 		ps.println("{" + System.lineSeparator() + arr + System.lineSeparator() + "};");
 		ps.println();
 	}
@@ -515,6 +515,7 @@ public class CodeGenerator
 		
 		ps.print(indent);
 		ps.println(" */");
+		ps.println();
 	}
 	
 	/**
@@ -542,5 +543,6 @@ public class CodeGenerator
 		
 		ps.print(indent);
 		ps.println(" */");
+		ps.println();
 	}
 }
