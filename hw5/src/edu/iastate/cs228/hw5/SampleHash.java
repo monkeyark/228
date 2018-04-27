@@ -1,6 +1,6 @@
 package edu.iastate.cs228.hw5;
 
-public class CHM92Hash {
+public class SampleHash {
   /*
    * To reduce space usage, remove the key list if it is not needed. The
    * list is not needed for hash table operation. If you hash a value
