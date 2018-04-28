@@ -97,23 +97,35 @@ public class PerfectHashGenerator
 	 */
 	public void	generate(String wordFileName, String outputClassName, Random rng) throws IOException, IllegalArgumentException
 	{
-		// TODO Exception
+		try
+		{
+			if (!outputClassName.matches("[A-Za-z_][A-Za-z_0-9]*"))
+			{
+				throw new IllegalArgumentException("invalid class name \"" + outputClassName + "\"");
+			}
+			
+			List<String> words = readWordFile(wordFileName);
+			int[][] table1 = new int[TABLE_ROWS][TABLE_COLUMNS];
+			int[][] table2 = new int[TABLE_ROWS][TABLE_COLUMNS];
+			int modulus = 2 * words.size() + 1;
+			
+			File file = new File(outputClassName + ".java");
+			OutputStream output = new FileOutputStream(file);
+			
+			Graph graph = mapping(table1, table2, modulus, rng, words);
+			int[] gArray = graph.fillGArray(words.size());
+			
+			CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
+			gen.generate(output, outputClassName);
+			
+//			Visualizer v = new Visualizer();
+//			v.useGraph(graph);
+		}
+		catch (IOException e)
+		{
+			throw new IOException(wordFileName + "cannot be read or " + outputClassName + "cannot be output");
+		}
 		
-		List<String> words = readWordFile(wordFileName);
-		int[][] table1 = new int[TABLE_ROWS][TABLE_COLUMNS];
-		int[][] table2 = new int[TABLE_ROWS][TABLE_COLUMNS];
-		int modulus = 2 * words.size() + 1;
-		File file = new File(outputClassName + ".java");
-		OutputStream output = new FileOutputStream(file);
-		
-		Graph graph = mapping(table1, table2, modulus, rng, words);
-		int[] gArray = graph.fillGArray(words.size());
-		
-		CodeGenerator gen = new CodeGenerator(table1, table2, gArray, modulus, words);
-		gen.generate(output, outputClassName);
-		
-//		Visualizer v = new Visualizer();
-//		v.useGraph(graph);
 	}
 	
 	/**
@@ -135,7 +147,10 @@ public class PerfectHashGenerator
 	 */
 	public void generate(List<String> words, OutputStream output, String outputClassName, Random rng) throws IllegalArgumentException
 	{
-		// TODO Ex
+		if (!outputClassName.matches("[A-Za-z_][A-Za-z_0-9]*"))
+		{
+			throw new IllegalArgumentException("invalid class name \"" + outputClassName + "\"");
+		}
 		int[][] table1 = new int[TABLE_ROWS][TABLE_COLUMNS];
 		int[][] table2 = new int[TABLE_ROWS][TABLE_COLUMNS];
 		int modulus = 2 * words.size() + 1;
