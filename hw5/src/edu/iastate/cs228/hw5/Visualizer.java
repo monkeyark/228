@@ -452,6 +452,7 @@ public class Visualizer {
 		}
 	}
 
+	@SuppressWarnings("serial")
 	private class VisPanel extends JPanel {
 		@Override
 		public void paintComponent(Graphics g) {
