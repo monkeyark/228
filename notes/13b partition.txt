@@ -1,0 +1,13 @@
+PARTITION(arr,first,last)
+    // Use the last element as the pivot.
+    pivot = arr[last]
+    i = first - 1
+
+    for j = first to last - 1
+	if A[j] <= pivot
+	    i++
+	    swap arr[i] and arr[j]
+
+    // Now put pivot in position i+1.
+    swap arr[i+1] and arr[last]
+    return i + 1

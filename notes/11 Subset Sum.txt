@@ -1,0 +1,6 @@
+Subset Sum
+
+Input: An array A[] with n elments and a number K. 
+
+Question: Does A[] contain a subset of elements that 
+          adds up to K? 

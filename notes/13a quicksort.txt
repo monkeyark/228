@@ -1,0 +1,15 @@
+public static void quickSort(int[] arr)
+{
+    quickSortRec(arr, 0, arr.length-1);
+}
+
+private static void quickSortRec
+    (int[] arr, int first, int last)
+{
+    if (first >= last) return;
+    int p = partition(arr, first, last);
+    quickSortRec(arr, first, p - 1);
+    quickSortRec(arr, p + 1, last);
+}
+
+

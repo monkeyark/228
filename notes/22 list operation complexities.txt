@@ -1,0 +1,29 @@
+                  	Linked List 		Array List
+
+get(i)                     O(n)			   O(1)
+Gets an element 	   
+at a given index
+
+contains(item)	           O(n) 		   O(n)
+
+size()			   O(1)			   O(1)
+
+add(item)                  O(1)		           O(1)*  // amortized cost
+Adds an element		   
+at the end 
+
+add(i,item)                O(n) // traversal	   O(n)   // shifts
+Adds or removes at
+a given position 
+
+remove(item)     	   O(n) // find            O(n)   // find + shift
+Removes an element
+
+Adds or removes            O(1)			   O(n)   // shifts
+during iteration 	   			   
+
+add(item), remove()        O(n) + O(k) = O(n+k)    O(kn)  // each is potentially O(n)
+iterates over list
+and performs k 
+adds/removes at 
+arbitrary position 
